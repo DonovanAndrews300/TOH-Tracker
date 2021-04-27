@@ -1,0 +1,12 @@
+{
+  "name": "TOH_Tracker",
+  "displayName": "TOH_Tracker",
+  "expo": {
+    "name": "TOH_Tracker",
+    "slug": "TOH_Tracker",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
