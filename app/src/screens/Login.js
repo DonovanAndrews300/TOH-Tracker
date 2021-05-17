@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Colors} from '../styles/index'
+import {colors} from '../styles/index'
 import { Button, TextInput, View, StyleSheet} from 'react-native'
 import { withNavigation } from 'react-navigation'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
@@ -18,7 +18,7 @@ class Login extends React.Component {
           height: "100%",
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: Colors.colors.white,
+          backgroundColor: colors.theme.white,
         },
         input: {
           width: 200,

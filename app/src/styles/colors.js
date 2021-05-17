@@ -1,4 +1,6 @@
-export const colors = {
+//Just create theme js file and add styles for the individual components to the component file
+
+export const theme = {
     black:"#0000",
     white:"#FFFF",
     primary700:"#05AC72",

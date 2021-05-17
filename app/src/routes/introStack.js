@@ -4,6 +4,7 @@ import Introduction from '../screens/Introduction/Introduction';
 import Home from '../screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/Login'
+import AppCamera from '../screens/Camera';
 
 
 
@@ -16,6 +17,7 @@ export default function StackRouter() {
       <Stack.Screen name="Introduction"  component={Introduction} />
       <Stack.Screen name="Login"  component={Login} />
       <Stack.Screen name="Home"  component={Home} />
+      <Stack.Screen name="AppCamera"  component={AppCamera} />
     </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View,Text, Button, StyleSheet } from 'react-native'
+import {PrimaryButton} from "../components/buttons/buttons"
+import { View,Text,StyleSheet } from 'react-native'
 import {withNavigation} from 'react-navigation'
 
 class Home extends Component {
@@ -10,6 +11,9 @@ class Home extends Component {
 
     render() {
         const styles = StyleSheet.create({
+            header:{
+
+            },
             container: {
               height: "100%",
               justifyContent: 'center',
@@ -27,9 +31,9 @@ class Home extends Component {
           })
         return (
            <View style={styles.container}>
-           <Text h2>Home</Text>
-            <Button title={'Scan Tree'}/>
-            <Button title={'View Map'}/>
+           <Text h1>Home</Text>
+            <PrimaryButton onPress={() => this.props.navigation.navigate("AppCamera")} title={'Scan Tree'}/>
+            <PrimaryButton title={'View Map'}/>
            </View>
         )
     }
