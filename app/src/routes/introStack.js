@@ -5,6 +5,7 @@ import Home from '../screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/Login'
 import AppCamera from '../screens/AppCamera';
+import Map from '../screens/Map';
 
 
 
@@ -18,6 +19,7 @@ export default function StackRouter() {
       <Stack.Screen name="Login"  component={Login} />
       <Stack.Screen name="Home"  component={Home} />
       <Stack.Screen name="AppCamera"  component={AppCamera} />
+      <Stack.Screen name="Map"  component={Map} />
     </Stack.Navigator>
     </NavigationContainer>
   );

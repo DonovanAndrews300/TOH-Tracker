@@ -33,7 +33,7 @@ class Home extends Component {
            <View style={styles.container}>
            <Text h1>Home</Text>
             <PrimaryButton onPress={() => this.props.navigation.navigate("AppCamera")} title={'Scan Tree'}/>
-            <PrimaryButton title={'View Map'}/>
+            <PrimaryButton onPress={() => this.props.navigation.navigate("Map")} title={'View Map'}/>
            </View>
         )
     }
