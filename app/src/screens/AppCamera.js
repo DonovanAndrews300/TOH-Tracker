@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Alert} from 'react-native';
 import { Camera } from 'expo-camera';
 import { PrimaryButton } from '../components/buttons/buttons';
 import * as Location from 'expo-location';
@@ -8,13 +8,18 @@ import * as Location from 'expo-location';
 
 export default function AppCamera() {
     const [hasPermission, setHasPermission] = useState(null);
+    const [images, setImages] = useState(null);
+    const [location, setLocation] = useState(null);
+
+
     const [type, setType] = useState(Camera.Constants.Type.back);
   
     useEffect(() => {
       (async () => {
         const { status } = await Camera.requestPermissionsAsync();
-        Location.requestForegroundPermissionsAsync()
+        await Location.requestForegroundPermissionsAsync()
         setHasPermission(status === 'granted');
+        Alert.alert("You ae now ready to identify!", "To accurately identify, take three photos of the plant")
       })();
     }, []);
 
@@ -28,10 +33,10 @@ export default function AppCamera() {
     }
 
 
-    const validateImage = (image) => {
+    const validateImage = (images) => {
      const postData = {
         api_key: "RkX6DvReSNq1k8Pi48Jrwah2YNHSHP7Mbbk4pmU44AoOVcACmr",
-        images: [image.base64],
+        images:images,
         modifiers: ["crops_fast", "similar_images"],
         plant_language: "en",
         plant_details: ["common_names",
@@ -42,7 +47,7 @@ export default function AppCamera() {
                           "synonyms"]
       };
 
-      fetch('https://api.plant.id/v2/identify',  {
+     return fetch('https://api.plant.id/v2/identify',  {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,24 +58,45 @@ export default function AppCamera() {
       .then(data => {
         const plantList = data.suggestions
         plantList.forEach((plant)=>{
-         const  {probability} = plant 
-          if(probability>.76){
-           console.log(plant)
-         } })
+         const  {probability,scientific_name} = plant
+          if(probability>.55){
+            Alert.alert("Success", "You have successfully tracked a Tree of Heaven!")
+            //I can do a set state here and if false you can return an alert saying "Identification unsuccessful. This is either not a tree of heaven or the scan was unsuccessful."
+         }
+         if(probability<.55){
+          Alert.alert("Identification unsuccessful", "This is either not a tree of heaven or the scan was unsuccessful and you need to try again")
+          //I can do a set state here and if false you can return an alert saying "Identification unsuccessful. This is either not a tree of heaven or the scan was unsuccessful."
+       }
+        })
       });
+    }
+
+    const getLocation = () => {
+    return   Location.getCurrentPositionAsync({})
+          .then((currentLocation) => {
+            const {latitude,longitude} = currentLocation.coords
+            const coordinates = {latitude,longitude}
+            setLocation(coordinates)
+          })
+          .catch((error) => console.log(error))
     }
 
     //This will send a post request to the plantId api and if the photo is a tree of heaven then it will return an object with the photo and a current location
     const scanImage = async () => {
       if (this.camera) {
         let photo = await this.camera.takePictureAsync({base64:true});
-        Location.requestForegroundPermissionsAsync()
-        Location.getCurrentPositionAsync({}).then((location) =>{
-          const {latitude,longitude} = location.coords
-          console.log("The current location is ",latitude,longitude)
-        })
-        validateImage(photo);
-
+        if(!images){
+          setImages([photo.base64])
+        }
+        if(images){
+          if(images.length===3){
+          validateImage(images)
+          await getLocation().then(() =>console.log({validImages:images, location:location}))        
+        }
+        else{
+          setImages(images => [...images, photo.base64])
+        }  
+        } 
       }
     }
 
