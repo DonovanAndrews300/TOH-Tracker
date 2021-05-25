@@ -11,9 +11,6 @@ class Home extends Component {
 
     render() {
         const styles = StyleSheet.create({
-            header:{
-
-            },
             container: {
               height: "100%",
               justifyContent: 'center',
