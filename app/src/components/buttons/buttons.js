@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import {Button, TouchableOpacity,Text, StyleSheet} from 'react-native'
+import {Button, TouchableOpacity,Text, StyleSheet, View, Pressable } from 'react-native'
+import  Icon  from 'react-native-vector-icons/FontAwesome'
 import {colors} from '../../styles/index'
+
 
 const styles = StyleSheet.create({
     primaryButton : { 
@@ -20,3 +22,15 @@ export const PrimaryButton = (props) =>
   <Text>{props.title} </Text> 
 </TouchableOpacity>
 
+
+
+export const MenuButton = (props) => 
+<View style={{
+  position:'absolute',
+  right:10,
+  top:10}
+}>
+<Pressable onPress={() => props.props.navigation.toggleDrawer()}>
+  <Icon name="bars" size={30}/>
+</Pressable>
+</View>

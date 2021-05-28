@@ -26,22 +26,23 @@ export default function Introduction({navigation})  {
   return (
     <Onboarding
     DoneButtonComponent={Done}
+    onSkip={() => navigation.navigate("Login")}
     onDone={() => navigation.navigate("Login")}
-  pages={[
+    pages={[
     {
       backgroundColor: 'green',
-      image: <Image source={require('../../assets/asset1.jpg')} />,
+      image: <Image source={require('../assets/asset1.jpg')} />,
       title: 'Tree of Heaven Tracker',
       subtitle: '__ Tracked Trees!'
     },{
       backgroundColor: 'green',
-      image: <Image source={require('../../assets/asset2.jpg')} />,
+      image: <Image source={require('../assets/asset2.jpg')} />,
       title: 'Stop the spread now!',
       subtitle: 'Stop the invasion of the spotted lanternfly by tracking the locations of their host trees.',
     }
     ,{
       backgroundColor: 'green',
-      image: <Image source={require('../../assets/asset3.jpg')} />,
+      image: <Image source={require('../assets/asset3.jpg')} />,
       title: 'Our Mission',
       subtitle: 'The tree of heaven is vital for the lanternfly to reproduce in large numbers. By tracking them we can use the information to fight against them using know control methods',
     }

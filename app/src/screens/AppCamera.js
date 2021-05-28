@@ -23,7 +23,7 @@ export default function AppCamera() {
       })();
     }, []);
 
-    //This is the method to change from front camera to back
+    //This is the method to change from front camera to back probably not needed
     const switchCameraView = () => {
       setType(
         type === Camera.Constants.Type.back
@@ -61,11 +61,11 @@ export default function AppCamera() {
          const  {probability,scientific_name} = plant
           if(probability>.55){
             Alert.alert("Success", "You have successfully tracked a Tree of Heaven!")
-            //I can do a set state here and if false you can return an alert saying "Identification unsuccessful. This is either not a tree of heaven or the scan was unsuccessful."
+            //this should return true 
          }
          if(probability<.55){
           Alert.alert("Identification unsuccessful", "This is either not a tree of heaven or the scan was unsuccessful and you need to try again")
-          //I can do a set state here and if false you can return an alert saying "Identification unsuccessful. This is either not a tree of heaven or the scan was unsuccessful."
+          //this should return false
        }
         })
       });
@@ -90,7 +90,11 @@ export default function AppCamera() {
         }
         if(images){
           if(images.length===3){
+           //if this function returns true then get location, create object and pop camera screen if false then set images array back to null 
           validateImage(images)
+          {
+            //what needs to happen here is is the images are valid then they need to be converted from base64 into something else.
+          }
           await getLocation().then(() =>console.log({validImages:images, location:location}))        
         }
         else{
