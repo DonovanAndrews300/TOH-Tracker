@@ -41,6 +41,7 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem label="Share" onPress={onShare} />
+      <DrawerItem label="Logout" onPress={()=>console.log("Logout")} />
     </DrawerContentScrollView>
   );
 }

@@ -3,8 +3,8 @@
 export const theme = {
     black:"#0000",
     white:"#FFFF",
-    primary700:"#05AC72",
-    primary500:"#0AD48B",
-    primary300:"#3BFEBB",
+    primary700:"#007F5F",
+    primary500:"#55A630",
+    primary300:"#AACC00",
     primary100:"#13EBA2"
 }

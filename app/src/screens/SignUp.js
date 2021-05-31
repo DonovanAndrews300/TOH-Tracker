@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 
 
-const Login = props => {
+const SignUp = props => {
   const [username,setUsername] = useState(null)
   const [password,setPassword] = useState(null)
   const styles = StyleSheet.create({
@@ -37,23 +37,17 @@ const Login = props => {
   });
   return <>
           <View style={styles.container}>
-          <Text style={styles.h1}>Login</Text>
+          <Text style={styles.h1}>Create your account</Text>
         <TextInput value={username} onChangeText={username => setUsername(username)} placeholder={'Username'} style={styles.input} />
         <TextInput value={password} onChangeText={password => setPassword(password)} placeholder={'Password'} secureTextEntry={true} style={styles.input} />
-        <Button onPress={() => props.navigation.navigate('Home')} title={'Login'} color={colors.theme.primary700} style={styles.input} />
+        <Button onPress={() => props.navigation.navigate('Home')} title={'Sign up'} color={colors.theme.primary700} style={styles.input} />
         <View style={{
         paddingTop: 10,
         alignItems: 'center'
       }}>
-          <Pressable onPress={() => props.navigation.navigate('SignUp')}>
-            <Text style={styles.authText}>Sign-up</Text>
-          </Pressable>
-          <Pressable>
-            <Text style={styles.authText}>Forgot your password?</Text>
-          </Pressable>
         </View>
       </View>
       </>;
 };
 
-export default withNavigation(Login)
+export default withNavigation(SignUp)

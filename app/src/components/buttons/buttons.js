@@ -6,7 +6,7 @@ import {colors} from '../../styles/index'
 
 const styles = StyleSheet.create({
     primaryButton : { 
-        backgroundColor:colors.theme.primary700,
+        backgroundColor:colors.theme.primary500,
         height:45,
         width:125,
         margin:10,

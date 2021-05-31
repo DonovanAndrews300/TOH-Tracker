@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { SafeAreaView, StyleSheet, View, Image, ScrollView } from 'react-native';
-import { Icon } from 'react-native-vector-icons/FontAwesome';
 import { MenuButton } from '../components/buttons/buttons';
 
 export default function UserProfile(props) {

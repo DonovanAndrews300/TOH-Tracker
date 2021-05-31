@@ -7,6 +7,7 @@ import Login from '../screens/Login'
 import AppCamera from '../screens/AppCamera';
 import Map from '../screens/Map';
 import SideBarDrawer from './sideBarDrawer';
+import SignUp from '../screens/SignUp';
 
 
 
@@ -19,6 +20,7 @@ export default function StackRouter() {
       <Stack.Screen name="Introduction"  component={Introduction} />
       <Stack.Screen name="Login"  component={Login} />
       <Stack.Screen name="Home"  component={SideBarDrawer} />
+      <Stack.Screen name="SignUp"  component={SignUp} />
       <Stack.Screen name="AppCamera"  component={AppCamera} />
       <Stack.Screen name="Map"  component={Map} />
     </Stack.Navigator>

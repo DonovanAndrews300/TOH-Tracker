@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {MenuButton, PrimaryButton} from "../components/buttons/buttons"
 import { View,Text,StyleSheet } from 'react-native'
 import {withNavigation} from 'react-navigation'
+import {colors} from '../styles/index' 
 
 
 const Home = props => {
@@ -10,7 +11,7 @@ const Home = props => {
       height: "100%",
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: "green"
+      backgroundColor: colors.theme.primary700
     },
     input: {
       width: 200,
