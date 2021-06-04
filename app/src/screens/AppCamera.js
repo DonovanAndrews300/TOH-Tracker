@@ -12,6 +12,7 @@ export default function AppCamera() {
     const {validatedImages, setValidatedImages} = useState(null);
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(null);
+    const [camera, setCamera] = useState(null);
 
 
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -85,28 +86,31 @@ export default function AppCamera() {
 
     //This will send a post request to the plantId api and if the photo is a tree of heaven then it will return an object with the photo and a current location
     const scanImage = async () => {
-      if (this.camera) {
-        let photo = await this.camera.takePictureAsync({base64:true});
+      if (camera) {
+        setLoading(true)
+        let photo = await camera.takePictureAsync({base64:true});
         if(!images){
           setImages([photo.base64])
+          setLoading(false)
         }
         if(images){
           if(images.length===2){
            //if this function returns true then get location, create object and pop camera screen if false then set images array back to null 
-          setLoading(true)
-          validateImage(images).then(() => setLoading(false))
+          await validateImage(images).then(() => setLoading(false))
           {
             //what needs to happen here is is the images are valid then they need to be converted from base64 into something else.
           }
           await getLocation().then(() =>{
             console.log({validImages:images, location:location})
             setImages(null)
+
           }
             )  
 
         }
         else{
           setImages(images => [...images, photo.base64])
+          setLoading(false)
         }  
         } 
       }
@@ -121,7 +125,7 @@ export default function AppCamera() {
     }
     return (
       <View style={styles.container}>
-        <Camera ref={ref => this.camera = ref} style={styles.camera} type={type}>
+        <Camera ref={ref => setCamera(ref)} style={styles.camera} type={type}>
           <View style={styles.buttonContainer}>
               <PrimaryButton loading={loading} onPress={() =>scanImage()} title="Scan"/>
           </View>
