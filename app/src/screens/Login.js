@@ -4,7 +4,6 @@ import { Button,Text, TextInput, View, StyleSheet, Alert} from 'react-native'
 import { withNavigation } from 'react-navigation'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
 import { useAuth } from '../routes/authProvider'
-import * as firebase from 'firebase'
 
   const styles = StyleSheet.create({
     container: {

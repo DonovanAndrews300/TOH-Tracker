@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, TouchableOpacity,Text, StyleSheet, View, Pressable } from 'react-native'
+import {Button, TouchableOpacity,Text, StyleSheet, View, Pressable, ActivityIndicator } from 'react-native'
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import {colors} from '../../styles/index'
 
@@ -18,8 +18,12 @@ const styles = StyleSheet.create({
 })
 
 export const PrimaryButton = (props) => 
-<TouchableOpacity onPress={() => props.onPress()} style={styles.primaryButton}>
+<TouchableOpacity onPress={() => props.onPress()} style={styles.primaryButton} disabled={props.loading}>
+{props.loading ? 
+  <ActivityIndicator color={'#FFFF'}/>
+  : 
   <Text>{props.title} </Text> 
+}
 </TouchableOpacity>
 
 

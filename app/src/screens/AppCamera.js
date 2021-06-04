@@ -9,7 +9,9 @@ import * as Location from 'expo-location';
 export default function AppCamera() {
     const [hasPermission, setHasPermission] = useState(null);
     const [images, setImages] = useState(null);
+    const {validatedImages, setValidatedImages} = useState(null);
     const [location, setLocation] = useState(null);
+    const [loading, setLoading] = useState(null);
 
 
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -89,13 +91,19 @@ export default function AppCamera() {
           setImages([photo.base64])
         }
         if(images){
-          if(images.length===3){
+          if(images.length===2){
            //if this function returns true then get location, create object and pop camera screen if false then set images array back to null 
-          validateImage(images)
+          setLoading(true)
+          validateImage(images).then(() => setLoading(false))
           {
             //what needs to happen here is is the images are valid then they need to be converted from base64 into something else.
           }
-          await getLocation().then(() =>console.log({validImages:images, location:location}))        
+          await getLocation().then(() =>{
+            console.log({validImages:images, location:location})
+            setImages(null)
+          }
+            )  
+
         }
         else{
           setImages(images => [...images, photo.base64])
@@ -115,7 +123,7 @@ export default function AppCamera() {
       <View style={styles.container}>
         <Camera ref={ref => this.camera = ref} style={styles.camera} type={type}>
           <View style={styles.buttonContainer}>
-              <PrimaryButton onPress={() => scanImage()} title="Scan"/>
+              <PrimaryButton loading={loading} onPress={() =>scanImage()} title="Scan"/>
           </View>
         </Camera>
       </View>
