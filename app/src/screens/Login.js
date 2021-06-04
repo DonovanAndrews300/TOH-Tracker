@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {colors} from '../styles/index'
-import { Button,Text, TextInput, View, StyleSheet} from 'react-native'
+import { Button,Text, TextInput, View, StyleSheet, Alert} from 'react-native'
 import { withNavigation } from 'react-navigation'
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
+import { useAuth } from '../routes/authProvider'
+import * as firebase from 'firebase'
 
-
-const Login = props => {
-  const [username,setUsername] = useState(null)
-  const [password,setPassword] = useState(null)
   const styles = StyleSheet.create({
     container: {
       height: "100%",
@@ -35,12 +33,26 @@ const Login = props => {
       color: "grey"
     }
   });
+
+const Login = props => {
+  const [email,setEmail] = useState(null)
+  const [password,setPassword] = useState(null)
+  const {login,user,error, setError} = useAuth()
+
+  const onLogin = async () => {
+      login(email,password)
+      if(error){
+        Alert.alert("Error",`${error.message}`)
+        setError(null)
+      }
+  }
+
   return <>
           <View style={styles.container}>
           <Text style={styles.h1}>Login</Text>
-        <TextInput value={username} onChangeText={username => setUsername(username)} placeholder={'Username'} style={styles.input} />
+        <TextInput value={email} onChangeText={email => setEmail(email)} placeholder={'email'} style={styles.input} />
         <TextInput value={password} onChangeText={password => setPassword(password)} placeholder={'Password'} secureTextEntry={true} style={styles.input} />
-        <Button onPress={() => props.navigation.navigate('Home')} title={'Login'} color={colors.theme.primary700} style={styles.input} />
+        <Button onPress={() => onLogin()} title={'Login'} color={colors.theme.primary700} style={styles.input} />
         <View style={{
         paddingTop: 10,
         alignItems: 'center'

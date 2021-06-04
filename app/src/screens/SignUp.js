@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext} from 'react'
 import {colors} from '../styles/index'
 import { Button,Text, TextInput, View, StyleSheet} from 'react-native'
 import { withNavigation } from 'react-navigation'
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
+
+import { AuthContext } from '../routes/authProvider'
 
 
 const SignUp = props => {
-  const [username,setUsername] = useState(null)
+  const [email,setEmail] = useState(null)
   const [password,setPassword] = useState(null)
+
+  const {register} = useContext ( AuthContext )
+
+  const onSubmit= () =>{
+      register(email,password)
+  }
+
   const styles = StyleSheet.create({
     container: {
       height: "100%",
@@ -38,9 +46,9 @@ const SignUp = props => {
   return <>
           <View style={styles.container}>
           <Text style={styles.h1}>Create your account</Text>
-        <TextInput value={username} onChangeText={username => setUsername(username)} placeholder={'Username'} style={styles.input} />
+        <TextInput value={email} onChangeText={email => setEmail(email)} placeholder={'Email'} style={styles.input} />
         <TextInput value={password} onChangeText={password => setPassword(password)} placeholder={'Password'} secureTextEntry={true} style={styles.input} />
-        <Button onPress={() => props.navigation.navigate('Home')} title={'Sign up'} color={colors.theme.primary700} style={styles.input} />
+        <Button onPress={() => onSubmit()} title={'Sign up'} color={colors.theme.primary700} style={styles.input} />
         <View style={{
         paddingTop: 10,
         alignItems: 'center'

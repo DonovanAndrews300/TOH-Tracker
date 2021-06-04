@@ -6,6 +6,7 @@ import UserResources from '../screens/UserResources';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { colors } from '../styles';
+import {useAuth} from './authProvider'
 
 
 const styles = {
@@ -14,6 +15,8 @@ const styles = {
   backgroundColor:"white"
 
 }
+
+
 
 const onShare = async () => {
   try {
@@ -36,12 +39,18 @@ const onShare = async () => {
   }
 };
 
+
 function CustomDrawerContent(props) {
+  const {signOut} = useAuth()
+  const onSignOut = () => {
+  signOut()
+}
+
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem label="Share" onPress={onShare} />
-      <DrawerItem label="Logout" onPress={()=>console.log("Logout")} />
+      <DrawerItem label="Logout" onPress={onSignOut} />
     </DrawerContentScrollView>
   );
 }
