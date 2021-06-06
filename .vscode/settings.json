@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "pressable"
+    ],
+    "cSpell.ignoreWords": [
+        "firestore"
     ]
 }

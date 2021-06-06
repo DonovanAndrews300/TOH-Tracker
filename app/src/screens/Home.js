@@ -4,6 +4,7 @@ import { View,Text,StyleSheet } from 'react-native'
 import {withNavigation} from 'react-navigation'
 import {colors} from '../styles/index' 
 import { useAuth } from '.././routes/authProvider'
+import {api} from '../routes/dataProdiver'
 
 
 const Home = props => {
@@ -24,6 +25,7 @@ const Home = props => {
     }
   });
   const {user} = useAuth()
+  const { getTrees} = api()
   return <View style={styles.container}>     
   {
     //Need to put a side bar menu here. Also gonna just put the image of the logo here instead of doing background

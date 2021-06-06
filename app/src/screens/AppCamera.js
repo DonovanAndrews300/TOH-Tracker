@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Alert} from 'react-native';
 import { Camera } from 'expo-camera';
+import {api} from '../routes/dataProdiver'
+import {useAuth} from '../routes/authProvider'
 import { PrimaryButton } from '../components/buttons/buttons';
 import * as Location from 'expo-location';
 
@@ -13,7 +15,9 @@ export default function AppCamera() {
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(null);
     const [camera, setCamera] = useState(null);
-
+  
+    const {createTree} = api()
+    const {user} = useAuth()
 
     const [type, setType] = useState(Camera.Constants.Type.back);
   
@@ -62,11 +66,11 @@ export default function AppCamera() {
         const plantList = data.suggestions
         plantList.forEach((plant)=>{
          const  {probability,scientific_name} = plant
-          if(probability>.55){
+          if(probability>.40){
             Alert.alert("Success", "You have successfully tracked a Tree of Heaven!")
             //this should return true 
          }
-         if(probability<.55){
+         if(probability<.40){
           Alert.alert("Identification unsuccessful", "This is either not a tree of heaven or the scan was unsuccessful and you need to try again")
           //this should return false
        }
@@ -100,13 +104,13 @@ export default function AppCamera() {
           {
             //what needs to happen here is is the images are valid then they need to be converted from base64 into something else.
           }
-          await getLocation().then(() =>{
-            console.log({validImages:images, location:location})
+          await getLocation()
+            const tree = { 
+              location:location,
+              userID:user.uid
+            }
+            createTree(tree)
             setImages(null)
-
-          }
-            )  
-
         }
         else{
           setImages(images => [...images, photo.base64])
