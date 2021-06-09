@@ -1,6 +1,7 @@
 import Onboarding from 'react-native-onboarding-swiper';
 import {Button, Image, Pressable, Text} from 'react-native'
 import React from 'react';
+import {colors} from '../styles'
 
 
 const Done = ({...props}) => (
@@ -30,18 +31,18 @@ export default function Introduction({navigation})  {
     onDone={() => navigation.navigate("Login")}
     pages={[
     {
-      backgroundColor: 'green',
+      backgroundColor: colors.theme.primary700,
       image: <Image source={require('../assets/asset1.jpg')} />,
       title: 'Tree of Heaven Tracker',
       subtitle: '__ Tracked Trees!'
     },{
-      backgroundColor: 'green',
+      backgroundColor: colors.theme.primary700,
       image: <Image source={require('../assets/asset2.jpg')} />,
       title: 'Stop the spread now!',
       subtitle: 'Stop the invasion of the spotted lanternfly by tracking the locations of their host trees.',
     }
     ,{
-      backgroundColor: 'green',
+      backgroundColor: colors.theme.primary700,
       image: <Image source={require('../assets/asset3.jpg')} />,
       title: 'Our Mission',
       subtitle: 'The tree of heaven is vital for the lanternfly to reproduce in large numbers. By tracking them we can use the information to fight against them using know control methods',

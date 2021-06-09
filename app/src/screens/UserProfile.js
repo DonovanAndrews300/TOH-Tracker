@@ -2,6 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { SafeAreaView, StyleSheet, View, Image, ScrollView } from 'react-native';
 import { MenuButton } from '../components/buttons/buttons';
+import { colors } from '../styles';
 
 export default function UserProfile(props) {
   return (
@@ -33,7 +34,7 @@ export default function UserProfile(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:"green"
+        backgroundColor:colors.theme.primary700
     },
     text:{
         color:"#525752"

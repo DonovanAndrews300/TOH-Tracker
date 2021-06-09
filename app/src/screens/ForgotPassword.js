@@ -33,13 +33,13 @@ import { useAuth } from '../routes/authProvider'
     }
   });
 
-const Login = props => {
+const ForgotPassword = props => {
   const [email,setEmail] = useState(null)
-  const [password,setPassword] = useState(null)
-  const {login,user,error, setError} = useAuth()
+  const {resetPassword,error, setError} = useAuth()
 
-  const onLogin = async () => {
-      login(email,password)
+  const onSubmit = async () => {
+      resetPassword(email).then(() => Alert.alert("We've sent your email"))
+      
       if(error){
         Alert.alert("Error",`${error.message}`)
         setError(null)
@@ -48,23 +48,16 @@ const Login = props => {
 
   return <>
           <View style={styles.container}>
-          <Text style={styles.h1}>Login</Text>
+          <Text style={styles.h1}>Reset Password</Text>
         <TextInput value={email} onChangeText={email => setEmail(email)} placeholder={'email'} style={styles.input} />
-        <TextInput value={password} onChangeText={password => setPassword(password)} placeholder={'Password'} secureTextEntry={true} style={styles.input} />
-        <Button onPress={() => onLogin()} title={'Login'} color={colors.theme.primary700} style={styles.input} />
+        <Button onPress={() => onSubmit()} title={'Reset Password'} color={colors.theme.primary700} style={styles.input} />
         <View style={{
         paddingTop: 10,
         alignItems: 'center'
       }}>
-          <Pressable onPress={() => props.navigation.navigate('SignUp')}>
-            <Text style={styles.authText}>Sign-up</Text>
-          </Pressable>
-          <Pressable onPress={() => props.navigation.navigate('ResetPassword')}>
-            <Text style={styles.authText}>Forgot your password?</Text>
-          </Pressable>
         </View>
       </View>
       </>;
 };
 
-export default withNavigation(Login)
+export default withNavigation(ForgotPassword)
