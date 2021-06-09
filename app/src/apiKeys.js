@@ -1,10 +1,20 @@
-export default{ firebaseConfig : {
-    apiKey: "AIzaSyCazN-Ka8Qy70vwJguY7qOYIP7nXe924_Q",
-    authDomain: "toh-tracker.firebaseapp.com",
-    databaseURL: "https://toh-tracker-default-rtdb.firebaseio.com",
-    projectId: "toh-tracker",
-    storageBucket: "toh-tracker.appspot.com",
-    messagingSenderId: "287965647713",
-    appId: "1:287965647713:web:6e509119edfdf3d092ab20",
-    measurementId: "G-80HYT269EB"
-  }};
+import {REACT_APP_API_KEY,
+       REACT_APP_AUTH_DOMAIN,
+        REACT_APP_DATABASE_URL, 
+        REACT_APP_PROJECT_ID,
+        REACT_APP_STORAGE_BUCKET,
+        REACT_APP_MESSAGING_SENDER_ID,
+        REACT_APP_APP_ID,
+        REACT_APP_MEASUREMENT_ID
+      } from "@env"
+
+export const firebaseConfig = {
+    apiKey:REACT_APP_API_KEY,
+    authDomain:REACT_APP_AUTH_DOMAIN,
+    databaseURL:REACT_APP_DATABASE_URL,
+    projectId:REACT_APP_PROJECT_ID,
+    storageBucket:REACT_APP_STORAGE_BUCKET,
+    messagingSenderId:REACT_APP_MESSAGING_SENDER_ID,
+    appId:REACT_APP_APP_ID,
+    measurementId:REACT_APP_MEASUREMENT_ID
+  };
