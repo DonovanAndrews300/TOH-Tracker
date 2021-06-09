@@ -8,6 +8,10 @@ import Map from '../screens/Map';
 import {useAuth} from '../routes/authProvider'
 import SideBarDrawer from './sideBarDrawer';
 import SignUp from '../screens/SignUp';
+import { ActivityIndicator } from 'react-native';
+import { colors } from '../styles';
+import ForgotPassword from '../screens/ForgotPassword';
+
 
 
 
@@ -17,6 +21,7 @@ const AuthStack = () => {
 <Stack.Screen name="Introduction"  component={Introduction} />
       <Stack.Screen name="Login"  component={Login} />
       <Stack.Screen name="SignUp"  component={SignUp} />
+      <Stack.Screen name="ResetPassword"  component={ForgotPassword} />
   </Stack.Navigator>
 }
 const AppStack = () => {
@@ -27,13 +32,14 @@ const AppStack = () => {
   </Stack.Navigator>
 }
 export default function StackRouter() {
-  const {user} = useAuth()
+  const {user, authLoading} = useAuth()
   return (
-    <NavigationContainer>     
-      {user ?
+    <NavigationContainer> 
+      {authLoading && <ActivityIndicator style={{height: '100%',justifySelf: 'center', alignSelf: 'center'}} size={'large'} color={colors.theme.primary500}/>}
+      {user &&
       <AppStack/>
-       :
-       <AuthStack/>
+      }{!user && !authLoading &&
+        <AuthStack/>
       }
     </NavigationContainer>
   );
