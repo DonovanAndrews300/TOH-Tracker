@@ -5,13 +5,17 @@ export const DataContext = createContext();
 export const api = () => useContext(DataContext);
 
 export const DataProvider = ({children}) => {
-    const [user, setUser] = useState(null)
-    const [error,setError] = useState(null)
+    const bucketName = 'images'
+    const [imageUrl, setImageUrl] = useState(null)
     const db = firebase.firestore()
+    const storage = firebase.storage()
   
     return(
         <DataContext.Provider
         value={{
+
+            imageUrl,
+            setImageUrl,
             createTree: async (tree) => {
                 try {
                     await db.collection("Trees").add(tree)
@@ -23,29 +27,48 @@ export const DataProvider = ({children}) => {
             },
             getTrees: async () => {
                 try {
-                    await db.collection('Trees').get().then((snapshot) => snapshot.docs.forEach( doc => doc.data()))
+                    await db.collection('Trees').get().then(snapshot => snapshot.docs.forEach(doc => doc.data()))
                 }
                 catch(e){
                     console.log(e)
                 }
             },
-            getTreeById: async (userId) => {
+            getTreesById: async (userId) => {
                 try {
-                    await db.collection('Trees').where('userId','==', userId).then((snapshot) => snapshot.docs.forEach( doc => doc.data()))
-                }
+                    await db.collection('Trees').where('userID','==', userId).get().then((snapshot) => snapshot.docs.forEach(doc => doc.data()))       
+                          }
                 catch(e){
                     console.log(e)
                 }
             },
-            getTreeById: async () => {
+            saveImage: async (file) => {
                 try {
-                    await firebase.auth().signOut()
-                }
-                catch(e){
-                    console.log(e)
-                }
-            },
+                    const fileName =file.uri.split('/').pop()
+                    const storageRef = storage.ref(`${bucketName}`)
+                    const imageRef = storageRef.child(fileName)
+                    await imageRef.put(file.uri)
+
+                    
+                    imageRef.getDownloadURL().then((url) =>{
+                            if(!imageUrl){
+                            setImageUrl([url])
+                            return
+                            }
+                            if(imageUrl){
+                            setImageUrl((imageUrl) => imageUrl.concat([url]))
+                            
+                            
+                        } 
+                        })
+                    
+                    
             
+                }
+                catch(e){
+                    console.log(e)
+                }
+            },
+
             getUserById: async (email,password) => {
                 try {
                     await firebase.auth().createUserWithEmailAndPassword(email,password)
