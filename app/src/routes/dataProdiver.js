@@ -35,7 +35,7 @@ export const DataProvider = ({children}) => {
             },
             getTreesById: async (userId) => {
                 try {
-                    await db.collection('Trees').where('userID','==', userId).get().then((snapshot) => snapshot.docs.forEach(doc => doc.data()))       
+                     return db.collection('Trees').where('userID','==', userId).get()     
                           }
                 catch(e){
                     console.log(e)
@@ -43,10 +43,23 @@ export const DataProvider = ({children}) => {
             },
             saveImage: async (file) => {
                 try {
+                    const blob = await new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                    resolve(xhr.response);
+                    };
+                    xhr.onerror = function (e) {
+                    console.log(e);
+                    reject(new TypeError("Network request failed"));
+                    };
+                    xhr.responseType = "blob";
+                    xhr.open("GET", file.uri, true);
+                    xhr.send(null);
+                });
                     const fileName =file.uri.split('/').pop()
                     const storageRef = storage.ref(`${bucketName}`)
                     const imageRef = storageRef.child(fileName)
-                    await imageRef.put(file.uri)
+                    await imageRef.put(blob)
 
                     
                     imageRef.getDownloadURL().then((url) =>{
@@ -57,7 +70,7 @@ export const DataProvider = ({children}) => {
                             if(imageUrl){
                             setImageUrl((imageUrl) => imageUrl.concat([url]))
                             
-                            
+                          
                         } 
                         })
                     
