@@ -1,15 +1,21 @@
 import React, {createContext,useState, useContext, useEffect} from  'react'
 import * as firebase from 'firebase'
 
+
 export const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({children}) => {
+    const [authLoading,setAuthLoading] = useState(false)
     const [user, setUser] = useState(null)
     const [error,setError] = useState(null)
-
     useEffect(() => {
-      firebase.auth().onAuthStateChanged(user => setUser(user))  
+    setAuthLoading(true)
+      firebase.auth().onAuthStateChanged(user => {
+          setUser(user)
+          setAuthLoading(false)
+        })  
+    
     }, [])
 
     
@@ -21,11 +27,13 @@ export const AuthProvider = ({children}) => {
             setUser,
             error,
             setError,
+            authLoading,
             login: async (email,password) => {
                 try {
                     await firebase.auth().signInWithEmailAndPassword(email,password)
                 }
                 catch(e){
+                    console.log(e)
                     setError(e)
                 }
             },
@@ -35,6 +43,7 @@ export const AuthProvider = ({children}) => {
                 }
                 catch(e){
                     console.log(e)
+                    setError(e)
                 }
             },
             register: async (email,password) => {
@@ -43,6 +52,25 @@ export const AuthProvider = ({children}) => {
                 }
                 catch(e){
                     console.log(e)
+                    setError(e)
+                }
+            },
+            updateUserProfile: async (userProfile) => {
+                try {
+                    await firebase.auth().currentUser().updateProfile(userProfile)
+                }
+                catch(e){
+                    console.log(e)
+                    setError(e)
+                }
+            },
+            resetPassword: async (email) => {
+                try {
+                    return await firebase.auth().sendPasswordResetEmail(email)
+                }
+                catch(e){
+                    console.log(e)
+                    setError(e)
                 }
             },
         }}
