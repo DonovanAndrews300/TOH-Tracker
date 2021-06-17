@@ -31,8 +31,6 @@ const Home = props => {
     //Need to put a side bar menu here. Also gonna just put the image of the logo here instead of doing background
   }
           <MenuButton props={props}/>
-           <Text h1>Hello {user && user.email}!</Text>
-           <PrimaryButton onPress={() => console.log(user)} title={'Log'} />
             <PrimaryButton onPress={() => props.navigation.navigate("AppCamera")} title={'Scan Tree'} />
             <PrimaryButton onPress={() => props.navigation.navigate("Map")} title={'View Map'} />
            </View>;

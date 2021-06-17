@@ -39,10 +39,7 @@ export default function AppCamera() {
  
     useEffect(() => {
       (async () => { 
-          console.log("rendering..",imageUrls)
-
            if(tree.treeImages.length === 3){
-        console.log("saving",tree)
         await createTree(tree)
         setImages(null)
           }  
@@ -136,7 +133,6 @@ export default function AppCamera() {
               setImageUrls(urls)
             }
         }))
-        console.log("2", imageUrls)
           await getLocation()
           setImages(null)
         }

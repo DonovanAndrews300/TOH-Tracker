@@ -72,8 +72,7 @@ export default function UserProfile(props) {
     }
 
     const onChangeUserName = () => {
-        console.log(username)
-        user.updateProfile({displayName:username}).then(() => console.log(user))
+        user.updateProfile({displayName:username})
         setDisplayName(username)
         Alert.alert("Success", "Username changed")
         setUpdatingUserName(false)
