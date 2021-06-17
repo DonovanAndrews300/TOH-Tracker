@@ -89,7 +89,7 @@ export default function AppCamera() {
          const  {probability, plant_name} = plant
          if(plant_name == "Ailanthus altissima" && probability>.40){
             Alert.alert("Success", "You have successfully tracked a Tree of Heaven!")
-             setimagesAreValid(true)
+             setImagesAreValid(true)
              false
          }
          else{
@@ -126,14 +126,15 @@ export default function AppCamera() {
            //if this function returns true then get location, create object and pop camera screen if false then set images array back to null 
           await validateImage(images)
           setLoading(false)
-          
-          await images.map(image => saveImage(image).then((url) =>{
+          if(imagesAreValid){
+             await images.map(image => saveImage(image).then((url) =>{
             urls.push(url)
             if(urls.length===3){
               setImageUrls(urls)
             }
         }))
           await getLocation()
+          }
           setImages(null)
         }
           
