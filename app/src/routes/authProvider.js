@@ -57,7 +57,7 @@ export const AuthProvider = ({children}) => {
             },
             updateUserProfile: async (userProfile) => {
                 try {
-                    await firebase.auth().currentUser().updateProfile(userProfile)
+                    await firebase.auth().updateProfile(userProfile).then(() => console.log("Update Successfull"))
                 }
                 catch(e){
                     console.log(e)
