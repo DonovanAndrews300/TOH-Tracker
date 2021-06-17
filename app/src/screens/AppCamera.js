@@ -11,24 +11,44 @@ import * as Location from 'expo-location';
 export default function AppCamera() {
     const [hasPermission, setHasPermission] = useState(null);
     const [images, setImages] = useState(null);
-    const {validatedImages, setValidatedImages} = useState(null);
+    const [save, setSave] = useState(null);
+    const [imageUrls, setImageUrls] = useState(null);
+    const [imagesAreValid, setimagesAreValid] = useState(null);
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(null);
     const [camera, setCamera] = useState(null);
-  
-    const {createTree} = api()
+    const urls = []
+    const {createTree,getTreesById,setImageUrl,getTrees, saveImage} = api()
     const {user} = useAuth()
-
+    const tree = { 
+          location:location,
+          userID:user.uid,
+          treeImages:(imageUrls ? imageUrls : [])
+        }
     const [type, setType] = useState(Camera.Constants.Type.back);
-  
+    
     useEffect(() => {
-      (async () => {
+      (async () => {  
         const { status } = await Camera.requestPermissionsAsync();
         await Location.requestForegroundPermissionsAsync()
         setHasPermission(status === 'granted');
         Alert.alert("You ae now ready to identify!", "To accurately identify, take three photos of the plant")
       })();
     }, []);
+ 
+    useEffect(() => {
+      (async () => { 
+          console.log("rendering..",imageUrls)
+
+           if(tree.treeImages.length === 3){
+        console.log("saving",tree)
+        await createTree(tree)
+        setImages(null)
+          }  
+      })();
+    },[imageUrls]);
+ 
+      
 
     //This is the method to change from front camera to back probably not needed
     const switchCameraView = () => {
@@ -41,9 +61,12 @@ export default function AppCamera() {
 
 
     const validateImage = (images) => {
+      const imagesBase64 = images.map(image => {
+        return image.base64
+      })
      const postData = {
         api_key: "RkX6DvReSNq1k8Pi48Jrwah2YNHSHP7Mbbk4pmU44AoOVcACmr",
-        images:images,
+        images:imagesBase64,
         modifiers: ["crops_fast", "similar_images"],
         plant_language: "en",
         plant_details: ["common_names",
@@ -64,18 +87,20 @@ export default function AppCamera() {
       .then(response => response.json())
       .then(data => {
         const plantList = data.suggestions
-        plantList.forEach((plant)=>{
-         const  {probability,scientific_name} = plant
-          if(probability>.40){
+        plantList.every((plant)=>{
+         const  {probability, plant_name} = plant
+         if(plant_name == "Ailanthus altissima" && probability>.40){
             Alert.alert("Success", "You have successfully tracked a Tree of Heaven!")
-            //this should return true 
+             setimagesAreValid(true)
+             false
          }
-         if(probability<.40){
+         else{
           Alert.alert("Identification unsuccessful", "This is either not a tree of heaven or the scan was unsuccessful and you need to try again")
-          //this should return false
        }
+   
         })
-      });
+      })
+      .catch((error)=> console.log(error));
     }
 
     const getLocation = () => {
@@ -94,28 +119,32 @@ export default function AppCamera() {
         setLoading(true)
         let photo = await camera.takePictureAsync({base64:true});
         if(!images){
-          setImages([photo.base64])
+          setImages([photo])
           setLoading(false)
+          return
         }
         if(images){
-          if(images.length===2){
+          if(images.length===3){
            //if this function returns true then get location, create object and pop camera screen if false then set images array back to null 
-          await validateImage(images).then(() => setLoading(false))
-          {
-            //what needs to happen here is is the images are valid then they need to be converted from base64 into something else.
-          }
-          await getLocation()
-            const tree = { 
-              location:location,
-              userID:user.uid
+          await validateImage(images)
+          setLoading(false)
+          
+          await images.map(image => saveImage(image).then((url) =>{
+            urls.push(url)
+            if(urls.length===3){
+              setImageUrls(urls)
             }
-            createTree(tree)
-            setImages(null)
+        }))
+        console.log("2", imageUrls)
+          await getLocation()
+          setImages(null)
         }
+          
         else{
-          setImages(images => [...images, photo.base64])
+          setImages(images => images.concat([photo]))
           setLoading(false)
         }  
+        
         } 
       }
     }
