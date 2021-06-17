@@ -1,4 +1,5 @@
 import React, {createContext,useState, useContext, useEffect} from  'react'
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as firebase from 'firebase'
 
 export const DataContext = createContext();
@@ -27,7 +28,7 @@ export const DataProvider = ({children}) => {
             },
             getTrees: async () => {
                 try {
-                    await db.collection('Trees').get().then(snapshot => snapshot.docs.forEach(doc => doc.data()))
+                return await db.collection('Trees').get()
                 }
                 catch(e){
                     console.log(e)
@@ -43,6 +44,12 @@ export const DataProvider = ({children}) => {
             },
             saveImage: async (file) => {
                 try {
+                    
+                    const compressedImage = await ImageManipulator.manipulateAsync(
+                    file.uri,
+                    [],
+                    { compress: .5, format: ImageManipulator.SaveFormat.JPEG }
+                    );
                     const blob = await new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
                     xhr.onload = function () {
@@ -53,29 +60,18 @@ export const DataProvider = ({children}) => {
                     reject(new TypeError("Network request failed"));
                     };
                     xhr.responseType = "blob";
-                    xhr.open("GET", file.uri, true);
+                    xhr.open("GET", compressedImage.uri, true);
                     xhr.send(null);
-                });
-                    const fileName =file.uri.split('/').pop()
+                }); 
+                    const fileName =compressedImage.uri.split('/').pop()
                     const storageRef = storage.ref(`${bucketName}`)
                     const imageRef = storageRef.child(fileName)
                     await imageRef.put(blob)
 
-                    
-                    imageRef.getDownloadURL().then((url) =>{
-                            if(!imageUrl){
-                            setImageUrl([url])
-                            return
-                            }
-                            if(imageUrl){
-                            setImageUrl((imageUrl) => imageUrl.concat([url]))
-                            
-                          
-                        } 
-                        })
-                    
-                    
-            
+                    //return this promise and then set the downloadURL outside of the function
+                    //This may also solve my issue with the image urls in the camera component 
+                    //because the idea behind react is that th component should try to manage its own state
+                    return imageRef.getDownloadURL()
                 }
                 catch(e){
                     console.log(e)
