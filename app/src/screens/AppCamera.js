@@ -20,7 +20,8 @@ export default function AppCamera() {
     const urls = []
     const {createTree,getTreesById,setImageUrl,getTrees, saveImage} = api()
     const {user} = useAuth()
-    const tree = { 
+    const tree = {
+          username: (user.displayName ? user.displayName : null),
           location:location,
           userID:user.uid,
           treeImages:(imageUrls ? imageUrls : [])

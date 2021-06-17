@@ -1,6 +1,11 @@
-import * as React from 'react';
+import *as React from 'react';
 import MapView, {Callout, Marker} from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, FlatList} from 'react-native';
+import Modal from 'react-native-modal';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import {api} from '../routes/dataProdiver'
+import { useEffect,useState } from 'react';
+
 
 const mapStyle = [
   {
@@ -270,22 +275,31 @@ const mapStyle = [
   }
 ]
 
+
+
+
 export default function Map() {
-    const markers = [
-        { 
-            latlng: {
-                latitude: 39.991367,
-                longitude: -75.210734
-              }
-        },
-        {
-            latlng: {
-                latitude: 39.986855,
-                longitude:  -75.211423
-              }
-        }
-    ]
-    
+   const [markers,setMarkers] = useState (null)
+   const [isModalVisible, setModalVisible] = useState(false);
+   const {getTrees} = api()
+ 
+   const renderItem = (item) => <Image source={{uri:item.item.url}} style={{
+    alignSelf:"center",
+    width:200,
+    height:200,
+  
+}}/>
+   const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+   useEffect(() => {
+    (async () => {  
+      getTrees().then(snapshot => snapshot.docs.forEach(doc =>setMarkers([doc.data()])))
+
+    })();
+  }, []);  
+
   return (
     <View style={styles.container}>
       <MapView 
@@ -298,24 +312,32 @@ export default function Map() {
       style={styles.map}
       customMapStyle={mapStyle}
       >
-     
-
-{markers.map((marker, index) => (
-    <Marker
+      
+  
+{markers &&
+  markers.map((marker, index) => {
+    const images = marker.treeImages.map((image, index ) => {return {"url":image, "key":index.toString()}})
+   return <Marker
       key={index}
-      coordinate={marker.latlng}
+      image={require('../assets/icons8-tree-100.png')}
+      onPress={() => toggleModal()}
+      coordinate={marker.location}
       title={marker.title}
       description={marker.description}
     >
-      <Callout>
-              <View>
-     {         // This will contain a list of the images taken of the tree and possibly other information like the name of the user that took the photo or something 
-     }
-                <Text>This is a plain view</Text>
-              </View>
-            </Callout>
+      <Modal  isVisible={isModalVisible}  onBackdropPress={() => setModalVisible(false)}>
+        <View style={{backgroundColor:"white",height:"60%"}}>
+          <Text>Tracked by User: {marker.username ? marker.username : "Unknown"}</Text>
+          <FlatList
+        data={images}
+        renderItem={renderItem}
+        horizontal={true}
+      /> 
+        </View>
+      </Modal>
     </Marker>
-  ))}   
+}
+  )}   
       </MapView>
     </View>
   );
