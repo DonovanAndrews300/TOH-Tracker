@@ -10,10 +10,14 @@ const SignUp = props => {
   const [email,setEmail] = useState(null)
   const [password,setPassword] = useState(null)
 
-  const {register} = useContext ( AuthContext )
+  const {register, error, setError} = useContext ( AuthContext )
 
   const onSubmit= () =>{
       register(email,password)
+      if(error){
+        Alert.alert("Error",`${error.message}`)
+        setError(null)
+      }
   }
 
   const styles = StyleSheet.create({
