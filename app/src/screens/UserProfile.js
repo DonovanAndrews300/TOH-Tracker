@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { FlatList, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { SafeAreaView, StyleSheet, View, Image,TextInput, Button,Alert,ScrollView } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Image,TextInput, Button,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MenuButton } from '../components/buttons/buttons';
 import {useAuth} from '../routes/authProvider'
@@ -95,7 +95,7 @@ export default function UserProfile(props) {
             </View>
              <View style={styles.infoContainer}>
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-                    {!user.displayName ? user.email :displayName}
+                    {!user.displayName ? "Unknown":displayName}
                    </Text>
                     <TouchableOpacity onPress={() => setUpdatingUserName(true)}>
                     {updatingUserName ?   

@@ -1,8 +1,7 @@
 import *as React from 'react';
-import MapView, {Callout, Marker} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, FlatList} from 'react-native';
 import Modal from 'react-native-modal';
-import ImageViewer from 'react-native-image-zoom-viewer';
 import {api} from '../routes/dataProdiver'
 import { useEffect,useState } from 'react';
 

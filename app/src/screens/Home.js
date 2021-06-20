@@ -22,6 +22,11 @@ const Home = props => {
       borderWidth: 1,
       borderColor: 'black',
       marginBottom: 10
+    },
+    navButtons: {
+      justifyContent: 'flex-end',
+      height:"100%",
+      marginBottom:150
     }
   });
   const {user} = useAuth()
@@ -31,8 +36,11 @@ const Home = props => {
     //Need to put a side bar menu here. Also gonna just put the image of the logo here instead of doing background
   }
           <MenuButton props={props}/>
+          <View style={styles.navButtons}>
             <PrimaryButton onPress={() => props.navigation.navigate("AppCamera")} title={'Scan Tree'} />
             <PrimaryButton onPress={() => props.navigation.navigate("Map")} title={'View Map'} />
+          </View>
+            
            </View>;
 };
 export default withNavigation(Home)
