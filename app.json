@@ -11,7 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#7CFF79"
     },
-    "version": "1.0.0",
+    "version": "2.0.1",
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -19,10 +19,12 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#7CFF79"
       },
+  
       "package": "com.donovanandrews300.TOH_Tracker"
     }
   }
