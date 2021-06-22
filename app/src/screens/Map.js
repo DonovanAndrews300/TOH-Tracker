@@ -318,7 +318,7 @@ export default function Map() {
     const images = marker.treeImages.map((image, index ) => {return {"url":image, "key":index.toString()}})
    return <Marker
       key={index}
-      image={require('../assets/icons8-tree-100.png')}
+      image={require('../../../assets/icons8-tree-100.png')}
       onPress={() => toggleModal()}
       coordinate={marker.location}
       title={marker.title}

@@ -30,11 +30,13 @@ export const PrimaryButton = (props) =>
 
 export const MenuButton = (props) => 
 <View style={{
-  position:'absolute',
+  alignSelf: 'flex-end',
   right:10,
   top:10}
 }>
-<Pressable onPress={() => props.props.navigation.toggleDrawer()}>
+<Pressable onPress={() => {
+  console.log("pressed")
+  props.props.navigation.toggleDrawer()}}>
   <Icon name="bars" size={30}/>
 </Pressable>
 </View>
