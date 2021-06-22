@@ -35,7 +35,7 @@ export const MenuButton = (props) =>
   top:10}
 }>
 <Pressable onPress={() => {
-  console.log("pressed")
+
   props.props.navigation.toggleDrawer()}}>
   <Icon name="bars" size={30}/>
 </Pressable>
