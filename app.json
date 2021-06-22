@@ -3,26 +3,27 @@
   "displayName": "TOH_Tracker",
   "expo": {
     "name": "TOH_Tracker",
-    "icon":"./assets/images/icon.png",
-    "orientation":"portrait",
+    "icon": "./assets/images/icon.png",
+    "orientation": "portrait",
     "slug": "TOH_Tracker",
-    "splash":{
-      "image":"./assets/images/splash.png",
-      "resizeMode":"contain",
-      "backgroundColor":"#7CFF79"
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7CFF79"
     },
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios":{
-      "supportsTablet":true
+    "ios": {
+      "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon":{
-        "foregroundImage":"./assets/images/adaptive-icon.png",
-        "backgroundColor":"#7CFF79" 
-      }
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#7CFF79"
+      },
+      "package": "com.donovanandrews300.TOH_Tracker"
     }
   }
 }
