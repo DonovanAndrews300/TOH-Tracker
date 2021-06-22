@@ -1,6 +1,6 @@
 export const theme = {
     h1:{
-
+        
     },
     h2:{ 
 

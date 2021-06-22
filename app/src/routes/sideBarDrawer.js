@@ -68,6 +68,7 @@ export default function SideBarDrawer() {
       >
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Profile" component={UserProfile} />
+        <Drawer.Screen name="Resources" component={UserResources} />
       </Drawer.Navigator>
   )
 }

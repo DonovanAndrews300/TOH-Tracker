@@ -3,6 +3,7 @@
         "pressable"
     ],
     "cSpell.ignoreWords": [
-        "firestore"
+        "firestore",
+        "lanternfly"
     ]
 }
