@@ -23,8 +23,8 @@ const onShare = async () => {
     const result = await Share.share({
       message:
       //This should have actual app link tp share
-        'Tree of Heaven Tracker | Help track the tree of heaven to stop lanternfly',
-    });
+        'Tree of Heaven Tracker | https://play.google.com/store/apps/details?id=com.donovanandrews300.TOH_Tracker',
+    },);
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
         // shared with activity type of result.activityType
