@@ -35,6 +35,7 @@ export default function UserProfile(props) {
                 const flatImages = images.flat()
                 const treeImageList = flatImages.map((image, index ) => {return {"url":image, "key":index.toString()}})
                 setTreeImages(treeImageList)
+                
  
             })
             if(user.displayName){
@@ -44,7 +45,7 @@ export default function UserProfile(props) {
                 setProfilePicture(user.photoURL)
             }
         })();
-      }, []);  
+      });  
  
       const renderItem = (item) => <Image source={{uri:item.item.url}} style={styles.images}/>
     

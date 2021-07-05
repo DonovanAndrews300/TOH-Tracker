@@ -1,5 +1,5 @@
 import *as React from 'react';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image, FlatList} from 'react-native';
 import Modal from 'react-native-modal';
 import {api} from '../routes/dataProdiver'
@@ -302,6 +302,7 @@ export default function Map() {
   return (
     <View style={styles.container}>
       <MapView 
+      provider={PROVIDER_GOOGLE}
       initialRegion={{
       latitude: 39.9526,
       longitude: -75.1652,

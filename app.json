@@ -1,6 +1,7 @@
 {
   "name": "TOH_Tracker",
-  "displayName": "TOH_Tracker",
+  "displayName": "TOH_Tracker", 
+  "android.config.googleMaps.apiKey":"AIzaSyC-ThhXUF_IIBwL5QsOFY-kILH5MEWHk_A",
   "expo": {
     "name": "TOH_Tracker",
     "icon": "./assets/images/icon.png",
@@ -27,5 +28,6 @@
   
       "package": "com.donovanandrews300.TOH_Tracker"
     }
+   
   }
 }
